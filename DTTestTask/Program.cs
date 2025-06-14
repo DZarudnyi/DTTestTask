@@ -1,27 +1,38 @@
+using Clients.Context;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddControllers();
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        //Title = "",
+        //Version = "",
+        //Description = ""
+    });
+});
+
+builder.Services.AddDbContext<BaseDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DatabaseConnection")));
+
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
+    app.UseSwagger();
+app.UseSwaggerUI(ui =>
 {
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
-
-app.UseHttpsRedirection();
-app.UseStaticFiles();
-
-app.UseRouting();
+    ui.SwaggerEndpoint("/swagger/v1/swagger.json", "Test API v1");
+    ui.RoutePrefix = string.Empty;
+});
 
 app.UseAuthorization();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
+app.MapControllers();
 app.Run();
