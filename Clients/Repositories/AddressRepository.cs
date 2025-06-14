@@ -1,15 +1,11 @@
-﻿using Clients.Context;
+﻿using Abstractions.IRepositories;
+using Clients.Context;
 using Clients.Mapper;
 using Models.Dto;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Clients.Repositories
 {
-    public class AddressRepository
+    public class AddressRepository : IAddressRepository
     {
         private readonly BaseDbContext _dbContext;
         private readonly AddressMapper _addressMapper;
@@ -29,7 +25,7 @@ namespace Clients.Repositories
 
         public AddressDto GetAddressById(int id)
         {
-            return _dbContext.Find();
+            return _addressMapper.AddressToAddressDto(_dbContext.Address.Find(id));
         }
     }
 }

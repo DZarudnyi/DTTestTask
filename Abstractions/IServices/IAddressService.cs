@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services
+namespace Abstractions.IServices
 {
-    public class AddressServiceImpl
+    public interface IAddressService
     {
+
     }
 }

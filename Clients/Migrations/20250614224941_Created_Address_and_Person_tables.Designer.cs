@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Clients.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    [Migration("20250614171724_Added_Address_and_Person_tables")]
-    partial class Added_Address_and_Person_tables
+    [Migration("20250614224941_Created_Address_and_Person_tables")]
+    partial class Created_Address_and_Person_tables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

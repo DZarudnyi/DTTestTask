@@ -5,7 +5,7 @@
 namespace Clients.Migrations
 {
     /// <inheritdoc />
-    public partial class Added_Address_and_Person_tables : Migration
+    public partial class Created_Address_and_Person_tables : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
