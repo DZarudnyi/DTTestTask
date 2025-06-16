@@ -78,11 +78,5 @@ public class PersonController : ControllerBase
 
         return Ok(result);
     }
-
-    //[HttpGet("getAllPerson")]
-    //public List<PersonDto> GetPersons()
-    //{
-    //    return _personService.GetAllPersons();
-    //}
 }
 

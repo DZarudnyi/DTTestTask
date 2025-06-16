@@ -1,11 +1,11 @@
 ﻿using Models.Dto;
 
-namespace Abstractions.IRepositories
-{
-    public interface IAddressRepository
-    {
-        public long AddAddress(AddressDto address);
+namespace Abstractions.IRepositories;
 
-        public AddressDto GetAddressById(int id);
-    }
+public interface IAddressRepository
+{
+    public long AddAddress(AddressDto address);
+
+    public AddressDto GetAddressById(int id);
 }
+
