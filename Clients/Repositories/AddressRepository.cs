@@ -8,11 +8,12 @@ namespace Clients.Repositories
     public class AddressRepository : IAddressRepository
     {
         private readonly BaseDbContext _dbContext;
-        private readonly AddressMapper _addressMapper = new();
+        private readonly AddressMapper _addressMapper;
 
-        public AddressRepository(BaseDbContext dbContext)
+        public AddressRepository(BaseDbContext dbContext, AddressMapper addressMapper)
         {
             _dbContext = dbContext;
+            _addressMapper = addressMapper;
         }
 
         public long AddAddress(AddressDto addressDto)
