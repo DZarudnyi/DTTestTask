@@ -8,7 +8,7 @@ namespace Clients.Repositories
     public class AddressRepository : IAddressRepository
     {
         private readonly BaseDbContext _dbContext;
-        private readonly AddressMapper _addressMapper;
+        private readonly AddressMapper _addressMapper = new();
 
         public AddressRepository(BaseDbContext dbContext)
         {
@@ -25,7 +25,8 @@ namespace Clients.Repositories
 
         public AddressDto GetAddressById(int id)
         {
-            return _addressMapper.AddressToAddressDto(_dbContext.Address.Find(id));
+            var address = _dbContext.Address.Find(id);
+            return address == null ? null : _addressMapper.AddressToAddressDto(address);
         }
     }
 }

@@ -11,9 +11,21 @@ namespace Services
         private readonly IAddressRepository _addressRepository;
         private readonly PersonMapper _personMapper;
 
+        public PersonServiceImpl(IPersonRepository personRepository, IAddressRepository addressRepository, PersonMapper personMapper)
+        {
+            _personRepository = personRepository;
+            _addressRepository = addressRepository;
+            _personMapper = personMapper;
+        }
+
         public List<PersonDto> GetAllPersons()
         {
             return _personRepository.GetAllPersons();
+        }
+
+        public List<PersonDto> GetFilteredPersons(PersonDto request)
+        {
+            return _personRepository.GetFilteredPersons(request);
         }
 
         public PersonDto GetPersonById(long id)
@@ -23,10 +35,15 @@ namespace Services
 
         public PersonDto SavePerson(CreatePersonRequestDto requestDto)
         {
-            long addressId = _addressRepository.AddAddress(requestDto.Address);
+            long? addressId = null;
+            if (requestDto.Address != null && !string.IsNullOrEmpty(requestDto.Address.City))
+            {
+                addressId = _addressRepository.AddAddress(requestDto.Address);
+            }
+
             var personDto = _personMapper.RequestDtoToDto(requestDto);
-            _personRepository.SavePerson(personDto);
-            return personDto;
+            personDto.AddressId = addressId ?? 0;
+            return _personRepository.SavePerson(personDto);
         }
     }
 }

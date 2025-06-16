@@ -1,6 +1,12 @@
+using Abstractions.IRepositories;
+using Abstractions.IServices;
 using Clients.Context;
+using Clients.Mapper;
+using Clients.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Services;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,14 +19,25 @@ builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
     {
-        //Title = "",
-        //Version = "",
-        //Description = ""
+        Title = "Person API",
+        Version = "v1",
+        Description = "API for managing persons and their addresses"
     });
 });
 
 builder.Services.AddDbContext<BaseDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DatabaseConnection")));
+
+// Register repositories
+builder.Services.AddScoped<IPersonRepository, PersonRepository>();
+builder.Services.AddScoped<IAddressRepository, AddressRepository>();
+
+// Register mappers
+builder.Services.AddSingleton<PersonMapper>();
+builder.Services.AddSingleton<AddressMapper>();
+
+// Register services
+builder.Services.AddScoped<IPersonService, PersonServiceImpl>();
 
 
 var app = builder.Build();

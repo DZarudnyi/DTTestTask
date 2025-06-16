@@ -12,8 +12,6 @@ namespace Clients
         [Required(ErrorMessage = "Last name is required")]
         public string LastName { get; set; }
         public long? AddressId { get; set; }
-        [StringLength(4000, MinimumLength = 1)]
-        [Required(ErrorMessage = "Address is required")]
         public virtual Address Address { get; set; }
     }
 }
